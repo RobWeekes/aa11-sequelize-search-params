@@ -90,6 +90,8 @@ app.get('/musicians', async (req, res, next) => {
         query.include.push({
             model: Instrument,
             where: { type: req.query.instrumentTypes },
+            // From Cody: Using direct SQL with IN clause for better performance:
+            // where: literal(`type IN (${instrumentTypes.map(type => `'${type}'`).join(',')})`),
             through: { attributes: [] } // Omits the join table attributes
         })
     }
